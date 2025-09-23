@@ -1,0 +1,31 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Transaction Insights",
+  "name_for_model": "transaction_insights",
+  "description_for_human": "Access and analyze your financial transactions.",
+  "description_for_model": "Plugin for accessing and analyzing user transaction data.",
+  "auth": { "type": "none" },
+  "api": {
+    "type": "http",
+    "url": "http://localhost:8080/transactions",
+    "endpoints": [
+      {
+        "path": "/transactions",
+        "method": "GET",
+        "description": "Returns a list of transaction objects as JSON. Each object contains date, amount, name, category, and merchant_name."
+      },
+      {
+        "path": "/create_spending_rule",
+        "method": "POST",
+        "description": "Creates a new spending rule based on transaction analysis. Accepts category, limit amount, and time period."
+      },
+      {
+        "path": "/set_budget_alert",
+        "method": "POST", 
+        "description": "Sets up budget alerts for spending categories. AI can create alerts when spending approaches limits."
+      }
+    ]
+  },
+  "contact_email": "jhanavibehl@example.com",
+  "legal_info_url": "http://localhost:8080/legal"
+}

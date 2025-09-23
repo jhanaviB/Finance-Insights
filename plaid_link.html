@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plaid Link Token Flow</title>
+  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+</head>
+<body>
+  <h2>Connect your bank account with Plaid</h2>
+  <button id="link-btn">Open Plaid Link</button>
+  <pre id="result"></pre>
+  <script>
+    async function getLinkToken() {
+      const res = await fetch('http://localhost:8000/create_link_token', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }});
+    
+      const data = await res.json();
+      return data.link_token;
+    }
+
+    document.getElementById('link-btn').onclick = async function() {
+      const linkToken = await getLinkToken();
+      const handler = Plaid.create({
+        token: linkToken,
+        onSuccess: async function(public_token, metadata) {
+          document.getElementById('result').textContent = 'public_token: ' + public_token;
+          const res = await fetch('http://localhost:8000/exchange_public_token', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ public_token })
+          });
+          const data = await res.json();
+          document.getElementById('result').textContent += '\naccess_token: ' + (data.access_token || JSON.stringify(data));
+        },
+        onExit: function(err, metadata) {
+          if (err) {
+            document.getElementById('result').textContent = 'Error: ' + err.display_message;
+          }
+        }
+      });
+      handler.open();
+    };
+  </script>
+</body>
+</html>
