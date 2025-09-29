@@ -109,12 +109,6 @@ Works as an MCP-compatible resource:
 - *"Analyze my Venmo payment patterns"*
 
 
-- Limited to Venmo transactions only
-- Sandbox environment restrictions
-- Single user/account support
-- No persistent data storage
-- Basic error handling
-
 ## 📝 License
 
 MIT License - see [LICENSE](LICENSE) file
