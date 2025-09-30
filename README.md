@@ -22,7 +22,6 @@ An AI-powered financial transaction analysis platform that connects to your bank
  **Limitations**:
 - OAuth production access required for other accounts
 - Single account connection
-- Basic transaction display only
 
 ## Features (Current)
 
